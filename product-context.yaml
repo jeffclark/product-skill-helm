@@ -1,0 +1,19 @@
+# product-context.yaml
+# Managed by pm commands — append only, do not delete entries manually.
+# Each entry is date-stamped with its source command.
+# Cap: 20 entries in recent_artifacts (oldest removed when cap is reached).
+#
+# To initialize for your project, fill in the fields below and save this file
+# to your project root. All pm commands will read from and write to this file.
+
+schema_version: 1
+company: ""
+personas: []
+tech_stack: []
+principles: []
+recent_artifacts: []
+  # - date: 2026-02-22
+  #   type: brainstorm
+  #   topic: registration-flow
+  #   path: docs/brainstorms/2026-02-22-registration-flow-brainstorm.md
+  #   # Added 2026-02-22 by /pm:brainstorm

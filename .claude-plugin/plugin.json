@@ -1,0 +1,24 @@
+{
+  "name": "helm",
+  "version": "1.0.0",
+  "description": "PM force multiplier for AI-native product teams. Brainstorm, PRD, user stories, GTM, and analytics — with a challenger layer that pushes back on scope creep and weak rationale.",
+  "author": {
+    "name": "Jeff Clark",
+    "email": "jeff@clarkle.com",
+    "url": "https://github.com/jeffclark"
+  },
+  "homepage": "https://github.com/jeffclark/product-skill-helm",
+  "repository": "https://github.com/jeffclark/product-skill-helm",
+  "license": "MIT",
+  "keywords": [
+    "product-management",
+    "pm-workflow",
+    "prd",
+    "user-stories",
+    "gtm",
+    "analytics",
+    "ai-native",
+    "challenger",
+    "compound-engineering"
+  ]
+}
