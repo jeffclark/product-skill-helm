@@ -6,13 +6,26 @@ Pairs with [compound-engineering](https://github.com/EveryInc/compound-engineeri
 
 ## Installation
 
+**1. Clone the repo:**
+
 ```bash
-# Clone to your Claude Code plugins directory
 git clone https://github.com/jeffclark/product-skill-helm \
   ~/.claude/plugins/cache/local/helm/1.0.0
 ```
 
-Then add to `~/.claude/plugins/installed_plugins.json`:
+**2. Register the plugin** by adding this entry to `~/.claude/plugins/installed_plugins.json` inside the `"plugins"` object:
+
+```json
+"helm@local": [
+  {
+    "scope": "user",
+    "installPath": "/Users/YOUR_USERNAME/.claude/plugins/cache/local/helm/1.0.0",
+    "version": "1.0.0"
+  }
+]
+```
+
+Replace `YOUR_USERNAME` with your macOS username (`echo $USER` if unsure). If `installed_plugins.json` doesn't exist yet, create it:
 
 ```json
 {
@@ -21,7 +34,7 @@ Then add to `~/.claude/plugins/installed_plugins.json`:
     "helm@local": [
       {
         "scope": "user",
-        "installPath": "/Users/<you>/.claude/plugins/cache/local/helm/1.0.0",
+        "installPath": "/Users/YOUR_USERNAME/.claude/plugins/cache/local/helm/1.0.0",
         "version": "1.0.0"
       }
     ]
@@ -29,7 +42,7 @@ Then add to `~/.claude/plugins/installed_plugins.json`:
 }
 ```
 
-Restart Claude Code. The `/pm:*` commands will be available in any project.
+**3. Restart Claude Code.** The `/pm:*` commands will be available in any project.
 
 ## Setup
 
