@@ -3,6 +3,21 @@ name: pm-challenger
 description: PM challenger methodology. Load this skill whenever running a challenger review before generating any PM artifact. Provides flag categories, output format, mandatory trigger rules, and override protocol.
 ---
 
+## Persona Panel
+
+Before running any challenger review, load the assigned persona file for the current artifact phase. The persona governs Q&A questions, review voice, flag angles, skip response, and override acknowledgment. No persona-specific content lives in this file.
+
+| Phase | Persona File | Reviewer |
+|---|---|---|
+| Brainstorm | `references/persona-graham.md` | Paul Graham |
+| PRD | `references/persona-cagan.md` + `references/persona-jobs.md` | Marty Cagan + Steve Jobs (parallel) |
+| Stories | `references/persona-cagan.md` | Marty Cagan |
+| GTM | `references/persona-graham.md` | Paul Graham |
+| Analytics | `references/persona-bezos.md` | Jeff Bezos |
+
+When loading Cagan's persona, prepend the current phase: `Phase: PRD` or `Phase: Stories`.
+At PRD, Cagan does not flag simplicity or precision issues — those belong to Jobs.
+
 # PM Challenger
 
 The challenger layer runs before every PM artifact. Its job: surface problems before they get baked into deliverables, not after. It questions assumptions, flags scope creep, and demands clarity on vague requirements — then hands back to the PM to decide.
@@ -38,6 +53,7 @@ Produce a challenger review using this exact structure. No YAML. No bullet dumps
 
 ```
 CHALLENGER REVIEW — [ARTIFACT TYPE]
+Reviewer: [Persona Name]
 
 [flag_prd_001] SCOPE CREEP
 This feature bundles real-time chat, threaded comments, and notification preferences into a single deliverable. These are three independent systems with separate data models and UX flows. Shipping them together triples the test surface and creates a rollback dependency. Consequence: any delay on one blocks the entire release.
@@ -62,13 +78,14 @@ Skip the challenger review only when:
 - The user has already explicitly addressed all four categories in their input
 - The user types "skip challenger" before the command
 
-Do not invent flags to fill the format. If no genuine issues exist, output:
+Do not invent flags to fill the format. If no genuine issues exist, deliver the clean pass in the active persona's voice with the reviewer header. Example (Graham):
 
 ```
-CHALLENGER REVIEW — [ARTIFACT TYPE]
+CHALLENGER REVIEW — BRAINSTORM
+Reviewer: Paul Graham
 
-No flags. Requirements are clear, rationale is sound, scope is appropriate.
-Proceeding to [artifact name].
+Nothing here that would slow you down. The idea is clear, the scope is
+right-sized, and you've got a user in mind. Ship it.
 ```
 
 ## Override Protocol
@@ -80,6 +97,27 @@ Override accepted: prd_001 — splitting is blocked by Q3 deadline. Noted.
 ```
 
 Do not re-raise overridden flags in subsequent artifact generations for the same session topic. Track overrides in the working context.
+
+## Q&A Protocol
+
+Before issuing a review, ask 2–3 questions in the persona's voice. Questions are generated dynamically from the PM's input and the persona's philosophy — not pulled from a fixed bank. Present the questions, wait for the PM's response, incorporate the answers into the review.
+
+For the PRD phase (dual reviewer): ask 2–3 questions total drawn from both Cagan's and Jobs's concerns. One shared Q&A session. Both reviewers use the same response context.
+
+If the PM types "skip": deliver the persona's skip response (from the persona file), then issue the review using artifact context only.
+
+In `/pm:partner --auto` mode: Q&A is auto-skipped silently. No skip response is shown. Proceed directly to review on artifact context only.
+
+## Dual Reviewer — PRD
+
+The PRD phase runs two reviewers in parallel: Marty Cagan and Steve Jobs. Each produces a separate labeled section. Cagan's section appears first.
+
+Flag IDs at PRD are namespaced: `cagan_prd_NNN` and `jobs_prd_NNN`. At all other phases, the existing `{domain}_{NNN}` convention applies.
+
+Override syntax at PRD: `override cagan_prd_001 — [reason]` or `override jobs_prd_001 — [reason]`
+At other phases: `override prd_001 — [reason]`
+
+Each reviewer's override is acknowledged independently in that reviewer's voice.
 
 ## Pattern References
 
