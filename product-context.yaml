@@ -11,7 +11,27 @@ company: ""
 personas: []
 tech_stack: []
 principles: []
-recent_artifacts: []
+recent_artifacts:
+  - date: 2026-02-23
+    type: brainstorm
+    topic: persona-panel-challenger
+    path: docs/brainstorms/2026-02-23-persona-panel-challenger-brainstorm.md
+    # Added 2026-02-23 by /pm:partner
+  - date: 2026-02-23
+    type: prd
+    topic: persona-panel-challenger
+    path: docs/prds/2026-02-23-persona-panel-challenger-prd.md
+    # Added 2026-02-23 by /pm:partner
+  - date: 2026-02-23
+    type: stories
+    topic: persona-panel-challenger
+    path: docs/stories/2026-02-23-persona-panel-challenger-stories.md
+    # Added 2026-02-23 by /pm:partner
+  - date: 2026-02-23
+    type: gtm
+    topic: persona-panel-challenger
+    path: docs/gtm/2026-02-23-persona-panel-challenger-gtm.md
+    # Added 2026-02-23 by /pm:partner
   # - date: 2026-02-22
   #   type: brainstorm
   #   topic: registration-flow
