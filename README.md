@@ -6,51 +6,16 @@ Pairs with [compound-engineering](https://github.com/EveryInc/compound-engineeri
 
 ## Installation
 
-**1. Clone the repo:**
-
-```bash
-git clone https://github.com/jeffclark/product-skill-helm \
-  ~/.claude/plugins/cache/local/helm/1.0.0
+```
+/plugin marketplace add https://github.com/jeffclark/product-skill-helm.git
+/plugin install helm
 ```
 
-**2. Register the plugin** by adding this entry to `~/.claude/plugins/installed_plugins.json` inside the `"plugins"` object:
-
-```json
-"helm@local": [
-  {
-    "scope": "user",
-    "installPath": "/Users/YOUR_USERNAME/.claude/plugins/cache/local/helm/1.0.0",
-    "version": "1.0.0"
-  }
-]
-```
-
-Replace `YOUR_USERNAME` with your macOS username (`echo $USER` if unsure). If `installed_plugins.json` doesn't exist yet, create it:
-
-```json
-{
-  "version": 2,
-  "plugins": {
-    "helm@local": [
-      {
-        "scope": "user",
-        "installPath": "/Users/YOUR_USERNAME/.claude/plugins/cache/local/helm/1.0.0",
-        "version": "1.0.0"
-      }
-    ]
-  }
-}
-```
-
-**3. Restart Claude Code.** The `/pm:*` commands will be available in any project.
+Restart Claude Code. The `/pm:*` commands will be available in any project.
 
 ## Setup
 
-Copy `product-context.yaml` to your project root and fill in your context:
-
-```bash
-cp ~/.claude/plugins/cache/local/helm/1.0.0/product-context.yaml ./product-context.yaml
-```
+Create `product-context.yaml` in your project root and fill in your context:
 
 ```yaml
 schema_version: 1
