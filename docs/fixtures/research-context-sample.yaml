@@ -1,0 +1,78 @@
+# research-context-sample.yaml
+# Sample fixture for STORY-006 manual validation.
+# Both sections at status: ok with realistic data.
+# Use this file to test Research Context Injection in pm-challenger/SKILL.md.
+#
+# To use: copy this file to research-context.yaml at your project root,
+# then run a challenger review (brainstorm, PRD, or stories).
+# Verify that at least one flag cites a named source and specific data point.
+
+research_context:
+  topic: "youth sports mobile registration checkout"
+  generated_at: "2026-02-24T14:30:00Z"
+  generated_by: "pm:research"
+
+  customer_voice:
+    status: ok
+    source: "Monterey AI / Reforge Insights"
+    query: "youth sports mobile registration checkout"
+    snippet_count: 16
+
+    themes:
+      - label: "Checkout step count"
+        summary: "Parents find the number of steps to complete registration on mobile excessive."
+        mention_count: 9
+      - label: "Payment method gaps"
+        summary: "Users want Apple Pay and Google Pay; entering card details on mobile is error-prone."
+        mention_count: 7
+      - label: "Repeat data entry"
+        summary: "Returning families resent re-entering child information every season."
+        mention_count: 6
+      - label: "Fee transparency"
+        summary: "Total price shown at checkout often differs from what was expected at start."
+        mention_count: 4
+
+    snippets:
+      - text: "I had to enter my kid's info three separate times. This is absurd for a phone."
+        source: App Store
+        date: "2026-01-15"
+        sentiment: negative
+      - text: "Took me 20 minutes to register on my phone. Gave up and used my laptop."
+        source: App Store
+        date: "2026-01-22"
+        sentiment: negative
+      - text: "Why can't I use Apple Pay? Every other app supports it now."
+        source: App Store
+        date: "2026-02-03"
+        sentiment: negative
+      - text: "I register 4 kids every season. Saving my payment info would save me so much time."
+        source: Gong
+        date: "2026-01-30"
+        sentiment: neutral
+      - text: "Price showed $120 at the start and then $147 at checkout. What changed?"
+        source: Survey
+        date: "2026-02-10"
+        sentiment: negative
+
+  competitive_landscape:
+    status: ok
+    competitors:
+      - name: "TeamSnap"
+        features: "Mobile-first registration with saved payment profiles and one-tap re-enrollment for returning families. Supports Apple Pay, Google Pay, and ACH at checkout. In-app roster management visible to coaches after registration completes."
+        positioning: "Positioned as the all-in-one team management platform; registration is a conversion entry point into their broader scheduling, communication, and payment tools."
+        pricing: "$12/month per team for Basic; $16/month for Advanced with payment features; custom pricing for leagues over 10 teams"
+        source_url: "https://www.teamsnap.com/pricing"
+      - name: "SportsEngine"
+        features: "Unified family registration across multiple sports and age groups. Supports installment payment plans, bulk discount codes, and split-payment for multi-child households. Integrated background check for coaches at point of registration."
+        positioning: "Targets league administrators and multi-sport clubs; emphasizes compliance, background check integration, and organizational hierarchy as differentiators over consumer UX."
+        pricing: "Per-transaction fee model (2.9% + $0.30 per registration); no monthly fee for leagues; optional white-label at custom pricing"
+        source_url: "https://www.sportsengine.com/solutions/registration"
+      - name: "Sportably"
+        features: "Lightweight mobile registration with QR-code check-in for walk-up registrations. No saved profiles; optimized for low-friction single-event signups with minimal configuration. Mobile checkout in 3 taps for simple events."
+        positioning: "Targets single-sport recreational leagues that want zero setup time; explicitly not designed for multi-team organizations or returning-family workflows."
+        pricing: "Free up to 50 registrants per event; $0.99 per registration above that; no monthly fee"
+        source_url: null
+
+  pm_notes: |
+    TeamSnap Apple Pay support is directly relevant — if we don't address mobile
+    payment methods, we'll keep losing parents who abandon at checkout. Flag for PRD.

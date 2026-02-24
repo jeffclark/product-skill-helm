@@ -6,12 +6,15 @@ This plugin provides PM tooling for AI-native product and engineering teams.
 
 ## Commands
 
+- `/pm:research` — Gather market context: customer voice (Reforge Insights MCP) and
+  competitive intelligence. Writes `research-context.yaml` for use by all other commands.
 - `/pm:brainstorm` — Explore and validate a feature idea with the challenger layer
 - `/pm:prd` — Generate a Product Requirements Document
 - `/pm:stories` — Generate user stories from a PRD
 - `/pm:gtm` — Generate a go-to-market plan
 - `/pm:analytics` — Generate a narrative analytics plan
-- `/pm:partner` — Full lifecycle orchestrator (runs all of the above sequentially)
+- `/pm:partner` — Full lifecycle orchestrator (runs all of the above sequentially,
+  with research as phase 0)
 
 ## Plugin Architecture
 

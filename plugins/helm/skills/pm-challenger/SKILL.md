@@ -126,3 +126,77 @@ For domain-specific pattern recognition, consult:
 - `references/requirements-quality.md` — under-defined requirement signals, acceptance criteria checklist
 - `references/metrics-anti-patterns.md` — vanity metrics, proxy metric traps, unmeasurable criteria
 - `references/gtm-gap-patterns.md` — launch gap signals, rollout sequence checklist
+
+## Research Context Injection
+
+When `research-context.yaml` is loaded in the current session and at least one section
+has `status: ok`, apply the following rules before generating any challenger review.
+
+### 1. Inject research context
+
+Include the full parsed contents of `research-context.yaml` in the context available
+to the challenger. The challenger has access to all fields: customer voice themes,
+snippets with attribution, competitive landscape entries.
+
+### 2. Require at least one sourced citation
+
+The review must include at least one flag that:
+- Names a specific external data source (e.g., "Reforge Insights," or a named
+  competitor from `competitive_landscape`)
+- Cites a specific data point: a verbatim quote, a mention count, a named competitor
+  feature, or a pricing detail
+
+Generic references ("customer research suggests...", "competitors have this...") do
+**not** satisfy the requirement.
+
+**Acceptable sources narrow dynamically based on what is available:**
+- If only `competitive_landscape` is `status: ok`: citations must come from named
+  competitors in that section
+- If only `customer_voice` is `status: ok`: citations must come from Reforge snippets
+  in that section
+- If both are `status: ok`: either source is acceptable
+- Do not fabricate citations from sections that are `failed` or `no_results`
+
+**Dual-reviewer PRD phase:** The citation requirement applies to the combined Cagan +
+Jobs output. One citation in either reviewer's section satisfies the requirement for
+the phase.
+
+### 3. Research-sourced flag format
+
+Each flag that cites research context must include two components in the flag body:
+
+1. The cited gap or contradiction between the research finding and the artifact
+2. A concrete recommendation for updating the artifact
+
+The source name and data point must appear in the flag body itself — not only in the
+recommendation. Example:
+
+```
+[flag_prd_001] UNDER-DEFINED REQUIREMENTS
+Reforge Insights snippet (App Store, 3 weeks ago): 'onboarding takes too long' —
+12 mentions. Current PRD has no onboarding time requirement or time-to-first-value
+success criterion.
+Recommendation: Add a success criterion to FR-002 specifying maximum
+time-to-first-value (e.g., ≤2 minutes from account creation to first completed
+registration).
+```
+
+### 4. Flag cap with citation requirement
+
+The maximum of 5 flags per reviewer per review remains unchanged. Research-sourced
+flags count toward this cap.
+
+If all 5 flag slots would be filled by internal flags and a research-sourced flag is
+still required: drop the lowest-severity internal flag to make room. Note the
+substitution explicitly with this line immediately before the research-sourced flag:
+
+```
+[Internal flag omitted to accommodate required research citation.]
+```
+
+### When research context is absent or all-failed
+
+If `research-context.yaml` is not loaded, or all sections are `failed` or
+`no_results`: do not inject research context and do not add the citation directive.
+Run the review as if no research context exists. Do not reference or note the absence
+of research context in the review output.
