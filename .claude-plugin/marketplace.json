@@ -1,0 +1,14 @@
+{
+  "name": "product-skill-helm",
+  "owner": {
+    "name": "Jeff Clark",
+    "email": "jeff@clarkle.com"
+  },
+  "plugins": [
+    {
+      "name": "helm",
+      "source": "./plugins/helm",
+      "description": "PM force multiplier for AI-native product teams. Brainstorm, PRD, user stories, GTM, analytics, and market research — with a challenger layer that pushes back on scope creep and weak rationale."
+    }
+  ]
+}
