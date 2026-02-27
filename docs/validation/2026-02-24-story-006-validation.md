@@ -3,19 +3,39 @@ title: STORY-006 Manual Validation Results
 date: 2026-02-24
 story: STORY-006
 feature: market-research-phase
-status: passed
+status: pending-mcp-environment
 ---
 
 # STORY-006 Manual Validation Results
 
-**Date:** 2026-02-24
-**Validator:** Claude Code (inline review execution)
-**Fixture:** `docs/fixtures/research-context-sample.yaml` copied to `research-context.yaml`
-**Research context loaded:** both sections `status: ok`
-- `customer_voice`: 16 snippets, 4 themes (checkout step count: 9, payment method gaps: 7, repeat data entry: 6, fee transparency: 4)
-- `competitive_landscape`: TeamSnap, SportsEngine, Sportably
+**Status: PENDING — Real MCP environment required**
 
-**Pass criteria:** All 3 runs must include ≥1 flag naming an external source + citing a specific data point + concrete artifact recommendation.
+The runs below validated the **prompting instruction structure** (SKILL.md Research
+Context Injection section) using a synthetic fixture. They did **not** validate the
+end-to-end pipeline. STORY-006 acceptance is not met until real-environment runs are
+completed (see "Required real-environment validation" below).
+
+---
+
+**Date:** 2026-02-24
+**Validator:** Claude Code (inline simulation against synthetic fixture)
+**Fixture:** `docs/fixtures/research-context-sample.yaml` — fictional data authored by Claude Code. Not real Reforge Insights output. Not real web search output.
+**Limitation:** The challenger reviews below were simulated in-context against the same fixture data that Claude Code wrote. The Monterey AI MCP `search_snippets` tool was not called. No real `research-context.yaml` was produced by `/pm:research`. This is a circular test — the same model that authored the fixture data also ran the reviews against it.
+
+**What these runs do establish:**
+- The Research Context Injection prompting instructions in SKILL.md produce research-sourced flags when fixture data is present in the expected schema format
+- The flag format (source name + data point in body + concrete recommendation) is achievable
+- Cap substitution logic fires correctly when 5 internal flags are present
+
+**What these runs do NOT establish:**
+- That `/pm:research` successfully calls the Monterey AI MCP server
+- That the load step in the 5 existing commands reads a real file into execution context
+- That the challenger receives real MCP-returned data and generates citations from it
+- End-to-end compliance with the acceptance criteria in STORY-006
+
+---
+
+**Pass criteria (for real-environment runs):** All 3 runs must include ≥1 flag naming an external source + citing a specific data point + concrete artifact recommendation.
 **Required test case:** Cap substitution must fire in at least 1 run with substitution note documented.
 
 ---
@@ -143,9 +163,9 @@ status: passed
 | 2 | Brainstorm — Re-enrollment | Graham | `flag_brainstorm_002` | Yes | **PASS** |
 | 3 | PRD (weak) — Overhaul | Cagan | `flag_prd_004` (cap substitution) | Yes | **PASS** |
 
-**All 3 runs: PASS**
+**All 3 runs: PASS (synthetic fixture only — see status at top)**
 
-**STORY-006 acceptance gate: MET**
+**STORY-006 acceptance gate: NOT MET — pending real-environment runs**
 
 ### Observations
 
@@ -156,6 +176,41 @@ status: passed
 3. Cap substitution (Run 3) correctly identifies the narrowest/most recoverable internal flag as the one to drop. The substitution note format is unambiguous. The dropped flag (push notification permission flow) is real and should be addressed in sprint — but it is the right call to defer it for the research citation given the severity ordering.
 
 4. **Prompt compliance observation:** The Research Context Injection section in SKILL.md produces consistent citation behavior across both Paul Graham (brainstorm) and Marty Cagan (PRD) reviewer voices. The source-naming and data-point requirements are specific enough that there is no ambiguity about what satisfies them. Generic references ("customers mentioned...") were not produced in any run.
+
+---
+
+## Required real-environment validation
+
+To close STORY-006, run the following with Monterey AI MCP configured in your environment:
+
+**Prerequisites:**
+- Monterey AI MCP server configured in Claude Code (verify with `/mcp` or check `~/.claude/mcp.json`)
+- Delete any existing `research-context.yaml` at project root before starting
+
+**Step 1 — Run `/pm:research` on a real topic**
+```
+/pm:research [your topic]
+```
+Verify: `research-context.yaml` is written at project root with real snippets in `customer_voice` and real competitors in `competitive_landscape`. Both sections should be `status: ok` for the citation directive to activate.
+
+**Step 2 — Run a PRD challenger review**
+Run `/pm:prd` on any feature in your project. At the challenger review step, verify:
+- [ ] At least one flag names "Reforge Insights" or a named competitor by name
+- [ ] The cited data point is from the actual `research-context.yaml` written in Step 1 (not generic)
+- [ ] The flag includes a concrete artifact recommendation
+
+**Step 3 — Run a brainstorm challenger review**
+Run `/pm:brainstorm` on any topic. Same verification as Step 2.
+
+**Step 4 — Cap substitution run**
+Use a deliberately weak artifact (bundle 5+ unrelated requirements, vague rationale, no metrics). Verify:
+- [ ] `[Internal flag omitted to accommodate required research citation.]` appears in the output
+- [ ] Total flags = 5 (cap maintained)
+- [ ] Research-sourced flag cites a named source and data point
+
+Document results and update this file's `status` frontmatter from `pending-mcp-environment` to `passed`.
+
+---
 
 ### Follow-up for Phase 2
 
