@@ -47,6 +47,21 @@ recent_artifacts:
     topic: persona-panel-challenger
     path: docs/gtm/2026-02-23-persona-panel-challenger-gtm.md
     # Added 2026-02-23 by /pm:partner
+  - date: 2026-02-24
+    type: brainstorm
+    topic: market-research-phase
+    path: docs/brainstorms/2026-02-24-market-research-phase-brainstorm.md
+    # Added 2026-02-24 by /pm:brainstorm
+  - date: 2026-02-24
+    type: prd
+    topic: market-research-phase
+    path: docs/prds/2026-02-24-market-research-phase-prd.md
+    # Added 2026-02-24 by /pm:prd
+  - date: 2026-02-24
+    type: stories
+    topic: market-research-phase
+    path: docs/stories/2026-02-24-market-research-phase-stories.md
+    # Added 2026-02-24 by /pm:stories
   # - date: 2026-02-22
   #   type: brainstorm
   #   topic: registration-flow

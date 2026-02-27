@@ -38,12 +38,13 @@ All `/pm:*` commands read from this file automatically and update `recent_artifa
 
 | Command | What it does |
 |---------|-------------|
+| `/pm:research` | Gather customer voice (Reforge Insights MCP) and competitive intelligence. Writes `research-context.yaml` to project root. All other commands load it automatically. |
 | `/pm:brainstorm` | Explore a feature idea through structured dialogue. Produces a brainstorm doc. |
 | `/pm:prd` | Generate a PRD from a brainstorm doc or feature description. |
 | `/pm:stories` | Break a PRD into engineering-ready user stories. |
 | `/pm:gtm` | Build a go-to-market plan with rollout sequencing and stakeholder comms. |
 | `/pm:analytics` | Define the analytics plan using AARRR (growth) or HEART (UX/quality). |
-| `/pm:partner` | Full lifecycle orchestrator. Runs all of the above in sequence with PM approval gates. |
+| `/pm:partner` | Full lifecycle orchestrator. Runs research (phase 0) then all PM phases in sequence with approval gates. |
 
 Each command accepts a feature name or a file path:
 
@@ -102,7 +103,10 @@ docs/
   analytics/     YYYY-MM-DD-<topic>-analytics.md
   handoffs/      YYYY-MM-DD-<topic>-handoff.md
 product-context.yaml
+research-context.yaml   # written by /pm:research; loaded automatically by all commands
 ```
+
+`research-context.yaml` is a project-generated file. Add it to `.gitignore` if you do not want to commit research findings to source control.
 
 ## License
 

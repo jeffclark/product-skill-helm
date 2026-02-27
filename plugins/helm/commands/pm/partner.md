@@ -38,6 +38,68 @@ Announce: "Detected existing [type] for [topic]. Starting from [phase name]."
 
 ## Execution
 
+### Phase 0: Research
+<!-- Mirrors: commands/pm/research.md — update both if logic changes -->
+
+Runs only when entering at Phase 1 (feature name argument, not file path).
+
+1. Extract topic string from `$ARGUMENTS`, stripping `--auto` if present before use.
+2. (Interactive mode only) Print: `Phase 0: Research — [topic]`
+3. Execute research steps:
+   a. Call the Monterey AI MCP server `search_snippets` tool with the topic string,
+      30-second timeout. On success with results: `customer_voice.status: ok`. On
+      timeout, connection failure, or missing tool: `customer_voice.status: failed`,
+      populate `error` field. On empty result: `customer_voice.status: no_results`.
+   b. Run a web search for `[topic] competitors features pricing positioning`. With ≥2
+      named competitors: `competitive_landscape.status: ok`. With exactly 1 or no
+      usable results: `status: no_results`, `competitors: []`.
+   c. Check for existing `research-context.yaml` at project root. If present and valid
+      YAML and `pm_notes` is non-empty: carry forward the value. If present but invalid
+      YAML or absent: `pm_notes = ""`.
+   d. Write `research-context.yaml` to project root:
+      - `generated_by: "pm:partner"`
+      - `generated_at`: current UTC datetime in ISO 8601
+      - All other fields from steps a–c
+      - Do NOT write `citation_impact`
+      - If YAML serialization fails: print error, do not write file, continue to
+        Phase 0 Review / Phase 1.
+4. If both `customer_voice` and `competitive_landscape` are `status: failed` or
+   `no_results`: print exactly:
+   `Warning: research returned no results for "[topic]". Continuing without research context.`
+   Then proceed to Phase 1 (auto mode) or Phase 0 Review (interactive mode).
+5. **In `--auto` mode:** run silently. Suppress all output. Print only the dual-failure
+   warning above if applicable. Proceed directly to Phase 1 Brainstorm.
+6. **In interactive mode:** proceed to Phase 0 Review below.
+
+**Phase 0 Review (interactive mode only):**
+
+Skip this review if both research sections are `failed` or `no_results` (warning was
+already printed in step 4 above). Proceed to Phase 1.
+
+Display the human-readable research summary:
+- Customer voice: themes with mention counts + up to 5 attributed quotes (or failure
+  note if `status: failed` or `no_results`)
+- Competitive landscape: each competitor as a 2–3 sentence summary (or failure note)
+
+Then invoke AskUserQuestion:
+- Question: `"Research complete. Add notes before continuing, or proceed?"`
+- Options: (1) Add notes, (2) Proceed
+
+If "Add notes" is selected:
+- Invoke a second AskUserQuestion with an open text field (user enters notes via the
+  "Other" free-text option).
+- Read the current `research-context.yaml` into memory. Update only the `pm_notes`
+  field: if empty, set to the PM's text; if it already has content, append with a
+  single newline separator.
+- Re-serialize the entire document from the parsed structure (do not use string surgery
+  on the raw file). Use YAML block scalar (`|`) for `pm_notes` if it contains
+  newlines. Write the full file back. Do not alter any other field.
+
+After notes are submitted, or if "Proceed" is selected: continue to Phase 1.
+Do not re-display the research summary.
+
+---
+
 ### Phase 1: Brainstorm
 <!-- Mirrors: commands/pm/brainstorm.md — update both if logic changes -->
 

@@ -18,6 +18,28 @@ If $ARGUMENTS is empty, ask: "Which feature's GTM plan should I build? Provide a
 
 ## Execution
 
+### 0. Load research context (if present)
+
+Check for `research-context.yaml` at the project root:
+
+- **File absent** → continue silently. No warning, no mention.
+- **File present but invalid YAML** → print exactly:
+  `Warning: research-context.yaml could not be parsed — running without research context.`
+  Then continue as if absent.
+- **File present and valid** → read the full file contents into the command's execution
+  context. This context is available to both artifact generation and challenger review
+  steps in this session.
+  - Check staleness: if `generated_at` is more than 7 days before current UTC datetime,
+    print exactly:
+    `Warning: research context for "[topic]" is N days old (generated YYYY-MM-DD). Consider re-running /pm:research to refresh findings.`
+    where `[topic]` is `research_context.topic` from the file, and N is the whole
+    number of days elapsed.
+  - If `generated_at` cannot be parsed: print exactly:
+    `Warning: research context for "[topic]" — generated date unknown. Consider re-running /pm:research to refresh findings.`
+    If `topic` also cannot be read, omit the topic clause.
+
+Staleness warnings do not block execution. Continue immediately after printing.
+
 ### 1. Load context
 
 Read `product-context.yaml` at the project root:
