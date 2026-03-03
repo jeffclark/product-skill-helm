@@ -6,12 +6,26 @@ Pairs with [compound-engineering](https://github.com/EveryInc/compound-engineeri
 
 ## Installation
 
+Run these two commands in any Claude Code session:
+
 ```
 /plugin marketplace add https://github.com/jeffclark/product-skill-helm.git
 /plugin install helm
 ```
 
 Restart Claude Code. The `/pm:*` commands will be available in any project.
+
+## Updating
+
+Refresh the marketplace, then reinstall:
+
+```
+/plugin marketplace update product-skill-helm
+/plugin uninstall helm
+/plugin install helm
+```
+
+Restart Claude Code to apply the update.
 
 ## Setup
 
