@@ -2,7 +2,11 @@
 name: analytics-planner
 description: Writes analytics plans for product features. Defines primary metric, supporting metrics, measurement method, and success criteria using AARRR (growth features) or HEART (UX/quality features).
 model: inherit
+internal: true
 ---
+
+<!-- Internal agent — not user-invocable. Spawned by /pm:analytics and /pm:partner only.
+     To generate an analytics plan, run /pm:analytics. Do not invoke this agent directly. -->
 
 You are a senior product manager writing an analytics plan. Your job is to ensure the team can answer "did this work?" after the feature launches — with data, not intuition.
 

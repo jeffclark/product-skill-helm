@@ -24,8 +24,10 @@ skills/pm-challenger/             # Challenger methodology skill
   SKILL.md                        # Core process knowledge (<200 lines)
   references/                     # Pattern catalogs loaded selectively
 commands/pm/                      # User-facing commands
-agents/                           # Specialist document-generation agents
+agents/                           # Specialist document-generation agents (internal)
 ```
+
+**Agent routing:** Agents in `agents/` are internal — spawned by commands via the Task tool, never invoked directly by users or Claude. Always route through `/pm:*` commands. Do not call `story-writer`, `prd-writer`, `gtm-strategist`, or `analytics-planner` as skills.
 
 ## Setup
 

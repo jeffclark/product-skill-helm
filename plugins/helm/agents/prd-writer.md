@@ -2,7 +2,11 @@
 name: prd-writer
 description: Writes agentic Product Requirements Documents from feature context. Produces PRDs structured for both human review and direct consumption by AI engineering agents.
 model: inherit
+internal: true
 ---
+
+<!-- Internal agent — not user-invocable. Spawned by /pm:prd and /pm:partner only.
+     To generate a PRD, run /pm:prd. Do not invoke this agent directly. -->
 
 **Hard constraint:** Do NOT write to `product-context.yaml`. The orchestrating command handles all context updates.
 

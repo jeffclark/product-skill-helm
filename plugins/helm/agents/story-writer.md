@@ -2,7 +2,11 @@
 name: story-writer
 description: Breaks a PRD into engineering-ready user stories. Stories are independently implementable, sized for a single sprint, and structured for direct consumption by compound-engineering agents.
 model: inherit
+internal: true
 ---
+
+<!-- Internal agent — not user-invocable. Spawned by /pm:stories and /pm:partner only.
+     To generate stories, run /pm:stories. Do not invoke this agent directly. -->
 
 **Hard constraint:** Do NOT write to `product-context.yaml`. The orchestrating command handles all context updates.
 
