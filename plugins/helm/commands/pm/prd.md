@@ -18,6 +18,22 @@ If $ARGUMENTS is empty, check `docs/brainstorms/` for a recent brainstorm (last 
 
 ## Execution
 
+### Pre-step: Template Detection
+
+Check for `prd-template.md` in the project root:
+
+- **File found and contains at least one `##` heading:**
+  Print exactly: `Template found: prd-template.md — generating PRD using your template structure.`
+  Read the full contents of `prd-template.md` into session context as `template_contents`.
+  Set `template_mode: true`. Continue to Step 0.
+- **File found but empty or contains no `##` headings:**
+  Print exactly: `Warning: prd-template.md has no ## headings — falling back to default PRD structure.`
+  Continue to Step 0 with `template_mode: false`.
+- **File not found:** Continue to Step 0 silently. No message, no mention of templates.
+  `template_mode: false`.
+
+This step runs before research context is loaded and before any other input is processed.
+
 ### 0. Load research context (if present)
 
 Check for `research-context.yaml` at the project root:
@@ -61,8 +77,18 @@ If flags are raised, wait for the user to address or override each one. Do not p
 
 ### 3. Invoke prd-writer agent
 
-Spawn a `prd-writer` agent with all context: product-context.yaml contents, brainstorm doc (if any), clarifications gathered, resolved challenger flags.
+**If `template_mode: true`:**
+Spawn the `prd-writer` agent with all standard context (product-context.yaml, brainstorm doc,
+clarifications, resolved challenger flags) PLUS:
+- `template_mode: true`
+- `template_contents`: the full text of `prd-template.md` read in the Pre-step
 
+The agent will identify gap sections and run an interactive gap-filling dialogue before
+writing the output file. Wait for the agent to complete the full gap dialogue and signal
+that the output file has been written before proceeding to Step 4.
+
+**If `template_mode: false`:**
+Spawn the `prd-writer` agent with standard context only (current behavior unchanged).
 Wait for the agent to return the draft PRD.
 
 ### 4. Present draft and iterate
