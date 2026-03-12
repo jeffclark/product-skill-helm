@@ -62,6 +62,26 @@ recent_artifacts:
     topic: market-research-phase
     path: docs/stories/2026-02-24-market-research-phase-stories.md
     # Added 2026-02-24 by /pm:stories
+  - date: 2026-03-04
+    type: gtm
+    topic: prd-template-support
+    path: docs/gtm/2026-03-04-prd-template-support-gtm.md
+    # Added 2026-03-04 by /pm:partner
+  - date: 2026-03-04
+    type: stories
+    topic: prd-template-support
+    path: docs/stories/2026-03-04-prd-template-support-stories.md
+    # Added 2026-03-04 by /pm:partner
+  - date: 2026-03-04
+    type: prd
+    topic: prd-template-support
+    path: docs/prds/2026-03-04-prd-template-support-prd.md
+    # Added 2026-03-04 by /pm:partner
+  - date: 2026-03-04
+    type: brainstorm
+    topic: prd-template-support
+    path: docs/brainstorms/2026-03-04-prd-template-support-brainstorm.md
+    # Added 2026-03-04 by /pm:partner
   # - date: 2026-02-22
   #   type: brainstorm
   #   topic: registration-flow
